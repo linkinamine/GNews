@@ -1,5 +1,7 @@
 package com.benallouch.data.entity
 
+import java.util.*
+
 data class Article(
         var source: NewsSource,
         var author: String,
@@ -7,5 +9,5 @@ data class Article(
         var description: String,
         var url: String,
         var urlToImage: String,
-        var publishedAt: String,
+        var publishedAt: Date,
         var content: String)
