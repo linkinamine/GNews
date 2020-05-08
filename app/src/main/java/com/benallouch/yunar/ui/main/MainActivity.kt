@@ -6,10 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.benallouch.yunar.R
-import com.benallouch.yunar.ui.ITEMS_PER_FETCH
-import com.benallouch.yunar.ui.VIEW_TYPE_ITEM
-import com.benallouch.yunar.ui.VIEW_TYPE_LOADING
-import com.benallouch.yunar.ui.getCurrentOffset
+import com.benallouch.yunar.ui.*
 import com.benallouch.yunar.ui.main.MainViewModel.UiModel
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.scope.lifecycleScope
@@ -55,8 +52,9 @@ class MainActivity : AppCompatActivity() {
         (recycler_articles.layoutManager as GridLayoutManager).spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 return when (adapter.getItemViewType(position)) {
+                    VIEW_TYPE_ITEM_HEADER -> 2
+                    VIEW_TYPE_LOADING -> 2
                     VIEW_TYPE_ITEM -> 1
-                    VIEW_TYPE_LOADING -> 2 //number of columns of the grid
                     else -> -1
                 }
             }

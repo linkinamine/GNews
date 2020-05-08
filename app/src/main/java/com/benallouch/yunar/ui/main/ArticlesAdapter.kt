@@ -27,7 +27,7 @@ class ArticlesAdapter(private val listener: (Article) -> Unit, private val curre
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
-        return if (viewType == VIEW_TYPE_ITEM) {
+        return if (viewType == VIEW_TYPE_ITEM || viewType == VIEW_TYPE_ITEM_HEADER) {
             val view = LayoutInflater.from(parent.context).inflate(R.layout.article_item, parent, false)
             ItemViewHolder(view)
         } else {
@@ -45,14 +45,17 @@ class ArticlesAdapter(private val listener: (Article) -> Unit, private val curre
         return if (articles[position] == null) {
             VIEW_TYPE_LOADING
         } else {
-            VIEW_TYPE_ITEM
+            when (position) {
+                0 -> VIEW_TYPE_ITEM_HEADER
+                else -> VIEW_TYPE_ITEM
+            }
         }
     }
 
     override fun getItemCount(): Int = articles.size
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder.itemViewType == VIEW_TYPE_ITEM) {
+        if (holder.itemViewType == VIEW_TYPE_ITEM || holder.itemViewType == VIEW_TYPE_ITEM_HEADER) {
             val article = articles[position]
             article?.let { article ->
                 (holder as ItemViewHolder).bind(article, currentOffset)
