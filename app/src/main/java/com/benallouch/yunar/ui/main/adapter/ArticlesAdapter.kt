@@ -1,5 +1,6 @@
 package com.benallouch.yunar.ui.main.adapter
 
+import android.content.Intent
 import android.graphics.BlendMode
 import android.graphics.BlendModeColorFilter
 import android.graphics.Color
@@ -12,12 +13,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.benallouch.data.entity.Article
 import com.benallouch.yunar.R
 import com.benallouch.yunar.ui.*
+import com.benallouch.yunar.ui.detail.DetailActivity
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.article_item.view.*
 import kotlinx.android.synthetic.main.progress_loading.view.*
 import java.util.*
 
-class ArticlesAdapter(private val listener: (Article) -> Unit, private val currentOffset: Int) :
+class ArticlesAdapter(private val currentOffset: Int) :
         RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var articles: ArrayList<Article?> by basicDiffUtil(
@@ -59,10 +61,18 @@ class ArticlesAdapter(private val listener: (Article) -> Unit, private val curre
             val article = articles[position]
             article?.let { article ->
                 (holder as ItemViewHolder).bind(article, currentOffset)
-                holder.itemView.setOnClickListener { listener(article) }
+                holder.itemView.setOnClickListener { navigateToDetailsActivity(it, article) }
             }
         }
     }
+
+    private fun navigateToDetailsActivity(it: View, article: Article) {
+        val intent = Intent(it.context, DetailActivity::class.java).apply {
+            putExtra(EXTRA_ARTICLE_URL, article.url)
+        }
+        it.context.startActivity(intent)
+    }
+
 
     class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind(article: Article, currentOffset: Int) {

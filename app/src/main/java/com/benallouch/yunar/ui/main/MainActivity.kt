@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initAdapter() {
-        adapter = ArticlesAdapter(viewModel::onMovieClicked, getCurrentOffset())
+        adapter = ArticlesAdapter(getCurrentOffset())
         recycler_articles.setHasFixedSize(true)
         recycler_articles.adapter = adapter
     }
@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
                 return when (adapter.getItemViewType(position)) {
                     VIEW_TYPE_ITEM_HEADER -> itemsPerRow
                     VIEW_TYPE_LOADING -> itemsPerRow
-                    VIEW_TYPE_ITEM ->  1
+                    VIEW_TYPE_ITEM -> 1
                     else -> -1
                 }
             }

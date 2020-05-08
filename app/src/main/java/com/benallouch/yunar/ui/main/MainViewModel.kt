@@ -2,7 +2,6 @@ package com.benallouch.yunar.ui.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.benallouch.data.entity.Article
 import com.benallouch.data.entity.NewsResponse
 import com.benallouch.usecase.GetArticlesUseCase
 import com.benallouch.yunar.ui.scope.ScopedViewModel
@@ -39,10 +38,6 @@ class MainViewModel(private val getArticlesUseCase: GetArticlesUseCase,
         }
     }
 
-    fun onMovieClicked(article: Article) {
-        _articleModel.value = UiModel.Navigation(article)
-    }
-
     override fun onCleared() {
         destroyScope()
         super.onCleared()
@@ -52,7 +47,6 @@ class MainViewModel(private val getArticlesUseCase: GetArticlesUseCase,
         object Loading : UiModel()
         object LoadingMore : UiModel()
         data class Content(val newsResponse: NewsResponse) : UiModel()
-        data class Navigation(val article: Article) : UiModel()
         object RequestData : UiModel()
     }
 }
