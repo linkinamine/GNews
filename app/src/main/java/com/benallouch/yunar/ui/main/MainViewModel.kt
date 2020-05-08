@@ -3,6 +3,7 @@ package com.benallouch.yunar.ui.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.benallouch.data.entity.Article
+import com.benallouch.data.entity.NewsResponse
 import com.benallouch.usecase.GetArticlesUseCase
 import com.benallouch.yunar.ui.scope.ScopedViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -27,10 +28,14 @@ class MainViewModel(private val getArticlesUseCase: GetArticlesUseCase,
         _articleModel.value = UiModel.RequestData
     }
 
-    fun onDataRequested() {
+    fun onDataRequested(page: Int) {
         launch {
-            _articleModel.value = UiModel.Loading
-            _articleModel.value = UiModel.Content(getArticlesUseCase.invoke())
+            if (page == 1)
+                _articleModel.value = UiModel.Loading
+            else
+                _articleModel.value = UiModel.LoadingMore
+
+            _articleModel.value = UiModel.Content(getArticlesUseCase.invoke(page))
         }
     }
 
@@ -45,7 +50,8 @@ class MainViewModel(private val getArticlesUseCase: GetArticlesUseCase,
 
     sealed class UiModel {
         object Loading : UiModel()
-        data class Content(val articles: List<Article>) : UiModel()
+        object LoadingMore : UiModel()
+        data class Content(val newsResponse: NewsResponse) : UiModel()
         data class Navigation(val article: Article) : UiModel()
         object RequestData : UiModel()
     }
