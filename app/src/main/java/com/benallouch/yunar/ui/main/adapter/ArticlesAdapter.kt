@@ -1,4 +1,4 @@
-package com.benallouch.yunar.ui.main
+package com.benallouch.yunar.ui.main.adapter
 
 import android.graphics.BlendMode
 import android.graphics.BlendModeColorFilter

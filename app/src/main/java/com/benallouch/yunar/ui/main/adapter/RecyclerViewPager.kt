@@ -1,4 +1,4 @@
-package com.benallouch.yunar.ui.main
+package com.benallouch.yunar.ui.main.adapter
 
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
