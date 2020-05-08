@@ -3,8 +3,8 @@ package com.benallouch.data.entity
 import java.util.*
 
 data class Article(
-        //We create some ids so we ca pass the to DiffUtil later
-        val id: String = UUID.randomUUID().toString(),
+        //We create an id so we ca pass the to DiffUtil later
+        var id: String,
         var source: NewsSource,
         var author: String,
         var title: String,
