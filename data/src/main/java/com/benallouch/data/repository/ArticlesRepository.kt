@@ -1,6 +1,7 @@
 package com.benallouch.data.repository
 
 import com.benallouch.data.entity.Article
+import com.benallouch.data.entity.NewsResponse
 import com.benallouch.data.entity.NewsSource
 import com.benallouch.data.source.RemoteDataSource
 import java.util.*
@@ -13,7 +14,7 @@ class ArticlesRepository(
         private val apiKey: String
 ) {
 
-    suspend fun getArticles(): List<Article> {
+    suspend fun getArticles(page: Int):NewsResponse {
 
         /*if (localDataSource.isEmpty()) {
             val articles =
@@ -23,9 +24,9 @@ class ArticlesRepository(
 
         return localDataSource.getArticles()*/
 
-        return remoteDataSource.getArticles(apiKey)
+        return remoteDataSource.getArticles(apiKey, page)
     }
 
     // suspend fun findById(id: Int): Article = localDataSource.findById(id)
-    suspend fun findById(id: Int): Article = Article(NewsSource("", ""), "", "", "", "", "", Date(), "")
+    suspend fun findById(id: Int): Article = Article("id", NewsSource("", ""), "", "", "", "", "", Date(), "")
 }
