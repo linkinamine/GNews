@@ -1,16 +1,11 @@
 package com.benallouch.yunar.ui
 
-import android.util.Log
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.math.abs
 
 fun Date.parseDate(offset: Int): String {
-
-    Log.d("offset", offset.toString())
-
     val differenceInMillis = abs(System.currentTimeMillis() - this.time)
-
     val differenceWithOffSet: Long = TimeUnit.SECONDS.convert(differenceInMillis + offset, TimeUnit.MILLISECONDS)
     return differenceWithOffSet.toInt().compoundDuration()
 }
@@ -22,7 +17,7 @@ fun getCurrentOffset(): Int {
 
 private fun Int.compoundDuration(): String {
     if (this < 0) return ""
-    if (this == 0) return "0h ago"
+    if (this == 0) return "0m ago"
     val hours: Int
     val minutes: Int
     var divisor: Int = 60 * 60
