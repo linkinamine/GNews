@@ -1,16 +1,17 @@
 package com.benallouch.yunar.ui
 
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.annotation.LayoutRes
+import android.content.Context
+import android.graphics.Typeface
+import android.os.Build
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import java.util.*
+import com.amulyakhare.textdrawable.TextDrawable
+import com.benallouch.yunar.R
 import kotlin.properties.Delegates
 
+
 inline fun <VH : RecyclerView.ViewHolder, T> RecyclerView.Adapter<VH>.basicDiffUtil(
-        initialValue: List<T>,
+        initialValue: ArrayList<T>,
         crossinline areItemsTheSame: (T, T) -> Boolean = { old, new -> old == new },
         crossinline areContentsTheSame: (T, T) -> Boolean = { old, new -> old == new }
 ) =
@@ -28,15 +29,25 @@ inline fun <VH : RecyclerView.ViewHolder, T> RecyclerView.Adapter<VH>.basicDiffU
             }).dispatchUpdatesTo(this@basicDiffUtil)
         }
 
-fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = true): View =
-        LayoutInflater.from(context).inflate(layoutRes, this, attachToRoot)
-
-fun Date.parseDate(): String {
-    val cal = Calendar.getInstance()
-    cal.time = this
-    val year = cal[Calendar.YEAR].toString()
-    val month = (cal[Calendar.MONTH] + 1).toString()
-    val day = cal[Calendar.DAY_OF_MONTH].toString()
-
-    return "$day.$month.$year"
+fun String.toTextDrawable(
+        fontSize: Int, context: Context
+): TextDrawable? {
+    return TextDrawable.builder()
+            .beginConfig()
+            .textColor(resolveTextColor(R.color.white_cream, context))
+            .useFont(Typeface.MONOSPACE)
+            .fontSize(fontSize) /* size in px */
+            .bold()
+            .withBorder(8)
+            .toUpperCase()
+            .endConfig()
+            .buildRect(this, resolveTextColor(R.color.colorAccent, context))
 }
+
+@Suppress("DEPRECATION")
+private fun resolveTextColor(color: Int, context: Context) =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            context.resources.getColor(color, context.theme)
+        } else {
+            context.resources.getColor(color)
+        }

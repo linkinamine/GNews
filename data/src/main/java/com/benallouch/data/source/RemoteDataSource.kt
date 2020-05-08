@@ -1,7 +1,7 @@
 package com.benallouch.data.source
 
-import com.benallouch.data.entity.Article
+import com.benallouch.data.entity.NewsResponse
 
 interface RemoteDataSource {
-    suspend fun getArticles(apiKey: String): List<Article>
+    suspend fun getArticles(apiKey: String, page: Int): NewsResponse
 }
