@@ -11,8 +11,7 @@ import com.benallouch.yunar.ui.parseDate
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.article_item.view.*
 
-
-class ArticlesAdapter(private val listener: (Article) -> Unit) :
+class ArticlesAdapter(private val listener: (Article) -> Unit, private val currentOffset: Int) :
         RecyclerView.Adapter<ArticlesAdapter.ViewHolder>() {
 
     var articles: List<Article> by basicDiffUtil(
@@ -29,17 +28,17 @@ class ArticlesAdapter(private val listener: (Article) -> Unit) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val article = articles[position]
-        holder.bind(article)
+        holder.bind(article, currentOffset)
         holder.itemView.setOnClickListener { listener(article) }
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        fun bind(article: Article) {
+        fun bind(article: Article, currentOffset: Int) {
             with(itemView) {
                 article_title.text = article.title
                 article_description.text = article.description
                 article_source.text = article.source.name
-                article_published.text = article.publishedAt.parseDate()
+                article_published.text = article.publishedAt.parseDate(currentOffset)
                 Glide.with(context).load(article.urlToImage).into(article_iv)
             }
         }

@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import java.util.*
 import kotlin.properties.Delegates
+
 
 inline fun <VH : RecyclerView.ViewHolder, T> RecyclerView.Adapter<VH>.basicDiffUtil(
         initialValue: List<T>,
@@ -30,13 +30,3 @@ inline fun <VH : RecyclerView.ViewHolder, T> RecyclerView.Adapter<VH>.basicDiffU
 
 fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = true): View =
         LayoutInflater.from(context).inflate(layoutRes, this, attachToRoot)
-
-fun Date.parseDate(): String {
-    val cal = Calendar.getInstance()
-    cal.time = this
-    val year = cal[Calendar.YEAR].toString()
-    val month = (cal[Calendar.MONTH] + 1).toString()
-    val day = cal[Calendar.DAY_OF_MONTH].toString()
-
-    return "$day.$month.$year"
-}

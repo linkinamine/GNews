@@ -5,6 +5,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.benallouch.yunar.R
+import com.benallouch.yunar.ui.getCurrentOffset
 import com.benallouch.yunar.ui.main.MainViewModel.UiModel
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.scope.lifecycleScope
@@ -27,7 +28,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initAdapter() {
-        adapter = ArticlesAdapter(viewModel::onMovieClicked)
+        adapter = ArticlesAdapter(viewModel::onMovieClicked, getCurrentOffset())
         recycler_articles.adapter = adapter
     }
 
