@@ -39,10 +39,8 @@ class MainActivity : AppCompatActivity() {
                 recyclerView = recycler_articles,
                 loadMore = { lastPage ->
                     //Don't fire a request if we reach the last items
-                    if (shouldLoadMore(lastPage)) {
-                        page = lastPage
-                        viewModel.onDataRequested(page, isInternetAvailable(this))
-                    }
+                    page = lastPage
+                    viewModel.onDataRequested(page, isInternetAvailable(this))
                 })
         recyclerViewPager.isLoading = false
     }
@@ -83,18 +81,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun onDataAvailable(model: UiModel.Content) {
         adapter.removeLoadingView()
-        recyclerViewPager.setDataLoaded()
-        var articles = model.newsResponse.articles
-        adapter.articles.addAll(articles)
-        totalItems = model.newsResponse.totalResults
-        adapter.notifyDataSetChanged()
-    }
 
-    private fun shouldLoadMore(lastPage: Int): Boolean {
-        var maxPages = totalItems / ITEMS_PER_FETCH
-        if (totalItems % ITEMS_PER_FETCH > 0)
-            ++maxPages
-        return lastPage <= maxPages
+        adapter.articles.clear()
+        adapter.articles.addAll(model.newsResponse.articles)
+
+        totalItems = model.newsResponse.totalResults
+        recyclerViewPager.setDataLoaded(totalItems)
+        adapter.notifyDataSetChanged()
     }
 
 }

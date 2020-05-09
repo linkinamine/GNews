@@ -4,7 +4,7 @@ import java.util.*
 
 data class Article(
         //We create an id so we ca pass the to DiffUtil later
-        var articleId: Int,
+        var articleId: String,
         var source: NewsSource,
         var author: String?,
         var title: String,

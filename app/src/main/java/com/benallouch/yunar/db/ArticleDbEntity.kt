@@ -7,7 +7,7 @@ import java.util.*
 
 @Entity
 data class ArticleDbEntity(
-        @PrimaryKey(autoGenerate = true) val articleId: Int,
+        @PrimaryKey val articleId: String,
         @Embedded
         var source: NewsSourceDbEntity,
         var author: String?,

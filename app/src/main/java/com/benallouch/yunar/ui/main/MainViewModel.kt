@@ -12,6 +12,7 @@ class MainViewModel(private val getArticlesUseCase: GetArticlesUseCase,
                     uiDispatcher: CoroutineDispatcher) : ScopedViewModel(uiDispatcher) {
 
 
+    private lateinit var fetchedData: NewsResponse
     private val _articleModel = MutableLiveData<UiModel>()
     val articleModel: LiveData<UiModel>
         get() {
@@ -34,8 +35,16 @@ class MainViewModel(private val getArticlesUseCase: GetArticlesUseCase,
             else
                 _articleModel.value = UiModel.LoadingMore
 
-            _articleModel.value = UiModel.Content(getArticlesUseCase.invoke(page, fetchLocally))
+            _articleModel.value = UiModel.Content(handleFetchedData(page, fetchLocally))
         }
+    }
+
+    private suspend fun handleFetchedData(page: Int, fetchLocally: Boolean): NewsResponse {
+        if (!::fetchedData.isInitialized) {
+            fetchedData = getArticlesUseCase.invoke(page, fetchLocally)
+            return fetchedData
+        }
+        return getArticlesUseCase.invoke(page, fetchLocally) + fetchedData
     }
 
     override fun onCleared() {
@@ -49,4 +58,9 @@ class MainViewModel(private val getArticlesUseCase: GetArticlesUseCase,
         data class Content(val newsResponse: NewsResponse) : UiModel()
         object RequestData : UiModel()
     }
+}
+
+private operator fun NewsResponse.plus(newsResponse: NewsResponse): NewsResponse {
+    newsResponse.articles.addAll(this.articles)
+    return newsResponse
 }
