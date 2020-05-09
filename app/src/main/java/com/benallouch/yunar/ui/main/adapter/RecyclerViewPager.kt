@@ -6,10 +6,11 @@ import androidx.recyclerview.widget.RecyclerView
 class RecyclerViewPager(
         private val recyclerView: RecyclerView,
         private val loadMore: (Int) -> Unit
-) : RecyclerView.OnScrollListener() {
+        ) : RecyclerView.OnScrollListener() {
 
     var isLoading = false
     var lastPage: Int = 1
+    var allItemsSize = 0
 
     init {
         recyclerView.addOnScrollListener(this)
@@ -22,15 +23,16 @@ class RecyclerViewPager(
 
         val layoutManager = recyclerView.layoutManager
         layoutManager?.let {
-            val totalItemCount = it.itemCount
+            val totalItemCountInLayout = it.itemCount
             val lastVisibleItemPosition = when (layoutManager) {
-                is GridLayoutManager -> layoutManager.findFirstCompletelyVisibleItemPosition()
+                is GridLayoutManager -> layoutManager.findLastVisibleItemPosition()
                 else -> return
             }
 
             if (isLoading) return
 
-            if (!isLoading && ((lastVisibleItemPosition + 4) >= totalItemCount)) {
+            if (lastVisibleItemPosition + 4 >= allItemsSize) return
+            if (!isLoading && ((lastVisibleItemPosition + 4) >= totalItemCountInLayout)) {
                 isLoading = true
                 ++lastPage
                 loadMore(lastPage)
@@ -38,7 +40,8 @@ class RecyclerViewPager(
         }
     }
 
-    fun setDataLoaded() {
+    fun setDataLoaded(totalItems: Int) {
+        allItemsSize = totalItems
         isLoading = false
     }
 }
