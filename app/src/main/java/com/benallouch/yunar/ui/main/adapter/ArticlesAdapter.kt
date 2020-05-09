@@ -24,7 +24,7 @@ class ArticlesAdapter(private val currentOffset: Int) :
 
     var articles: ArrayList<Article?> by basicDiffUtil(
             arrayListOf(),
-            areItemsTheSame = { old, new -> old?.id == new?.id }
+            areItemsTheSame = { old, new -> old?.articleId == new?.articleId }
     )
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

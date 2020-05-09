@@ -2,6 +2,8 @@
 
 buildscript {
     ext.kotlin_version = '1.3.61'
+    ext.stethoVersion = '1.5.1'
+
     repositories {
         google()
         jcenter()
@@ -52,7 +54,9 @@ allprojects {
                 retrofit              : 'com.squareup.retrofit2:retrofit:2.7.2',
                 retrofitGsonConverter : 'com.squareup.retrofit2:converter-gson:2.7.2',
                 koin                  : "org.koin:koin-androidx-viewmodel:2.1.1",
-                textdrawable          : 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
+                textdrawable          : 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1',
+                stetho                : "com.facebook.stetho:stetho:$stethoVersion",
+                okHttpStetho          : "com.facebook.stetho:stetho-okhttp3:$stethoVersion"
         ]
 
         testLibs = [

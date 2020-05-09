@@ -84,7 +84,8 @@ class MainActivity : AppCompatActivity() {
     private fun onDataAvailable(model: UiModel.Content) {
         adapter.removeLoadingView()
         recyclerViewPager.setDataLoaded()
-        adapter.articles.addAll(model.newsResponse.articles)
+        var articles = model.newsResponse.articles
+        adapter.articles.addAll(articles)
         totalItems = model.newsResponse.totalResults
         adapter.notifyDataSetChanged()
     }
