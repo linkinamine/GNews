@@ -27,14 +27,14 @@ class MainViewModel(private val getArticlesUseCase: GetArticlesUseCase,
         _articleModel.value = UiModel.RequestData
     }
 
-    fun onDataRequested(page: Int) {
+    fun onDataRequested(page: Int, fetchLocally: Boolean) {
         launch {
             if (page == 1)
                 _articleModel.value = UiModel.Loading
             else
                 _articleModel.value = UiModel.LoadingMore
 
-            _articleModel.value = UiModel.Content(getArticlesUseCase.invoke(page))
+            _articleModel.value = UiModel.Content(getArticlesUseCase.invoke(page, fetchLocally))
         }
     }
 

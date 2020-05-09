@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
                     //Don't fire a request if we reach the last items
                     if (shouldLoadMore(lastPage)) {
                         page = lastPage
-                        viewModel.onDataRequested(page)
+                        viewModel.onDataRequested(page, isInternetAvailable(this))
                     }
                 })
         recyclerViewPager.isLoading = false
@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity() {
         when (model) {
             UiModel.LoadingMore -> adapter.addLoadingView()
             is UiModel.Content -> onDataAvailable(model)
-            UiModel.RequestData -> viewModel.onDataRequested(page)
+            UiModel.RequestData -> viewModel.onDataRequested(page, isInternetAvailable(this))
         }
     }
 

@@ -13,15 +13,24 @@ class ArticlesRepository(
         private val apiKey: String
 ) {
 
-    suspend fun getArticles(page: Int): NewsResponse {
+    suspend fun getArticles(page: Int, shouldFetchRemotely: Boolean): NewsResponse {
 
-        if (localDataSource.isEmpty()) {
-            val newsResponse = remoteDataSource.getArticles(apiKey, page)
-            localDataSource.saveArticles(newsResponse.articles)
-            localDataSource.saveTotalItems(newsResponse.totalResults)
+        var newsResponse: NewsResponse
 
+        when {
+            shouldFetchRemotely -> {
+                newsResponse = remoteDataSource.getArticles(apiKey, page)
+                localDataSource.saveArticles(newsResponse.articles)
+                localDataSource.saveTotalItems(newsResponse.totalResults)
+            }
+            else -> {
+                if (!localDataSource.isEmpty())
+                    newsResponse = NewsResponse(null, localDataSource.getTotalItems(), localDataSource.getArticles() as ArrayList<Article>)
+                else throw IllegalAccessException("Trying to access an empty database!")
+
+            }
         }
-        return NewsResponse(null, localDataSource.getTotalItems(), localDataSource.getArticles() as ArrayList<Article>)
+        return newsResponse
 
     }
 
