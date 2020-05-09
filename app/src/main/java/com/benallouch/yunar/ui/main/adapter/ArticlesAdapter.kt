@@ -82,7 +82,7 @@ class ArticlesAdapter(private val currentOffset: Int) :
                 article_source.text = article.source.name
                 article_published.text = article.publishedAt.parseDate(currentOffset)
                 if (article.urlToImage != null) {
-                    Glide.with(context).load(article.urlToImage).into(article_iv)
+                    Glide.with(context).load(article.urlToImage).centerCrop().into(article_iv)
                 } else {
                     article_iv.setImageDrawable(article.source.name.toTextDrawable(40, context))
                 }
