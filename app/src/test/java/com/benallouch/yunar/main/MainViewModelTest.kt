@@ -42,10 +42,10 @@ class MainViewModelTest {
         runBlocking {
 
             val articles = arrayListOf(mockedArticle.copy(articleId = 1))
-            whenever(getArticles.invoke(1)).thenReturn(NewsResponse(null, 100, articles ))
+            whenever(getArticles.invoke(1,false)).thenReturn(NewsResponse(null, 100, articles ))
             vm.articleModel.observeForever(observer)
 
-            vm.onDataRequested(1)
+            vm.onDataRequested(1,false)
 
             verify(observer).onChanged(MainViewModel.UiModel.Loading)
         }
@@ -57,10 +57,10 @@ class MainViewModelTest {
         runBlocking {
             val articles = arrayListOf(mockedArticle.copy(articleId = 1))
 
-            whenever(getArticles.invoke(1)).thenReturn(NewsResponse(null, 100,articles))
+            whenever(getArticles.invoke(1,false)).thenReturn(NewsResponse(null, 100,articles))
             vm.articleModel.observeForever(observer)
 
-            vm.onDataRequested(1)
+            vm.onDataRequested(1,false)
 
             verify(observer).onChanged(MainViewModel.UiModel.Content(NewsResponse(null, 100, articles)))
         }
