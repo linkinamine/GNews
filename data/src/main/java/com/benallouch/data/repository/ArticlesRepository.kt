@@ -20,6 +20,8 @@ class ArticlesRepository(
         when {
             shouldFetchRemotely -> {
                 newsResponse = remoteDataSource.getArticles(apiKey, page)
+                //The APi doesn't return ids so we generate some ids so we can use them in Diffutil and DB persistence
+                newsResponse.articles.forEach { it.articleId = generateId(it) }
                 localDataSource.saveArticles(newsResponse.articles)
                 localDataSource.saveTotalItems(newsResponse.totalResults)
             }
@@ -32,6 +34,10 @@ class ArticlesRepository(
         }
         return newsResponse
 
+    }
+
+    private fun generateId(article: Article): String {
+        return article.description.hashCode().toString() + article.publishedAt.hashCode().toString()
     }
 
 }
