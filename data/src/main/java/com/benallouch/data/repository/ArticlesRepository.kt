@@ -25,5 +25,4 @@ class ArticlesRepository(
 
     }
 
-    suspend fun findById(id: String): Article = localDataSource.findById(id)
 }

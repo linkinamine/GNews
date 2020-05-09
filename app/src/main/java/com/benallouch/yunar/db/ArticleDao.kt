@@ -1,17 +1,13 @@
 package com.benallouch.yunar.db
 
 import androidx.room.*
-import com.benallouch.data.entity.Article
 
 @Dao
 interface ArticleDao {
     @Query("SELECT * FROM ArticleDbEntity")
-    fun getAll(): List<Article>
+    fun getAll(): List<ArticleDbEntity>
 
-    @Query("SELECT * FROM ArticleDbEntity WHERE id = :id")
-    fun findById(id: String): Article
-
-    @Query("SELECT COUNT(id) FROM ArticleDbEntity")
+    @Query("SELECT COUNT(articleId) FROM ArticleDbEntity")
     fun articleCount(): Int
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -21,7 +17,7 @@ interface ArticleDao {
     fun updateArticle(article: ArticleDbEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun saveTotalItems(totalItems: Int)
+    fun saveTotalItems(totalItems: TotalResultsEntity)
 
     @Query("SELECT totalResults FROM TotalResultsEntity")
     fun getTotalItems(): Int

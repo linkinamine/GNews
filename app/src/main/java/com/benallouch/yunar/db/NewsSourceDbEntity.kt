@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class NewsSourceDbEntity(
-        @PrimaryKey(autoGenerate = false) val id: String?,
+        @PrimaryKey(autoGenerate = false) var newsSourceId: String,
         var name: String
 
 )

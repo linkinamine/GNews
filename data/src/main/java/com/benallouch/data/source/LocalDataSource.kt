@@ -8,6 +8,5 @@ interface LocalDataSource {
     suspend fun saveTotalItems(totalItems: Int)
     suspend fun getArticles(): List<Article>
     suspend fun getTotalItems(): Int
-    suspend fun findById(id: String): Article
     suspend fun update(Article: Article)
 }

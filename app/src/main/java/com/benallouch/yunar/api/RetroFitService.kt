@@ -1,5 +1,6 @@
 package com.benallouch.yunar.api
 
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -7,9 +8,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class RetroFitService(baseUrl: String) {
 
-    val okHttpClient = HttpLoggingInterceptor().run {
-        level = HttpLoggingInterceptor.Level.BODY
-        OkHttpClient.Builder().addInterceptor(this).build()
+    private val okHttpClient = HttpLoggingInterceptor().run {
+        OkHttpClient.Builder().addNetworkInterceptor(StethoInterceptor())
+                .build()
     }
 
     val service: ArticlesService = Retrofit.Builder()
