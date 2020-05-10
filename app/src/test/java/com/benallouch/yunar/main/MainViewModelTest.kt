@@ -41,7 +41,7 @@ class MainViewModelTest {
     fun `show loading first`() {
         runBlocking {
 
-            val articles = arrayListOf(mockedArticle.copy(articleId = 1))
+            val articles = arrayListOf(mockedArticle.copy(articleId = "id"))
             whenever(getArticles.invoke(1,false)).thenReturn(NewsResponse(null, 100, articles ))
             vm.articleModel.observeForever(observer)
 
@@ -55,7 +55,7 @@ class MainViewModelTest {
     fun `getArticles is called after loading`() {
 
         runBlocking {
-            val articles = arrayListOf(mockedArticle.copy(articleId = 1))
+            val articles = arrayListOf(mockedArticle.copy(articleId = "id"))
 
             whenever(getArticles.invoke(1,false)).thenReturn(NewsResponse(null, 100,articles))
             vm.articleModel.observeForever(observer)

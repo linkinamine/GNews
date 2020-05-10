@@ -6,7 +6,7 @@ import java.time.Instant
 import java.util.*
 
 val mockedArticle = Article(
-        0,
+        "id",
         NewsSource(UUID.randomUUID().toString(), "ESPN"),
         "author",
         "title",

@@ -1,8 +1,8 @@
 package com.benallouch.yunar.db
 
 import com.benallouch.data.entity.Article
-import com.benallouch.data.entity.NewsSource
 import com.benallouch.data.source.LocalDataSource
+import com.benallouch.yunar.db.entity.TotalResultsEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.*
@@ -33,29 +33,4 @@ class RoomDataSource(db: ArticleRoomDatabase) : LocalDataSource {
         withContext(Dispatchers.IO) { articleDao.updateArticle(article.toArticleDbEntity()) }
     }
 }
-
-private fun ArticleDbEntity.toArticleEntity() = Article(
-        articleId,
-        NewsSource(source.newsSourceId, source.name),
-        author,
-        title,
-        description,
-        url,
-        urlToImage,
-        publishedAt,
-        content
-)
-
-private fun Article.toArticleDbEntity(): ArticleDbEntity =
-        ArticleDbEntity(
-                articleId,
-                NewsSourceDbEntity(source.id ?: UUID.randomUUID().toString(), source.name),
-                author,
-                title,
-                description,
-                url,
-                urlToImage,
-                publishedAt,
-                content
-        )
 

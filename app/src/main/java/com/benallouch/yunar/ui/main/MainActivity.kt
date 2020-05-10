@@ -56,6 +56,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupGridViewSpan() {
+        //items per row will change depending on the orientation
         val itemsPerRow = (recycler_articles.layoutManager as GridLayoutManager).spanCount
 
         (recycler_articles.layoutManager as GridLayoutManager).spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {

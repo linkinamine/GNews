@@ -1,4 +1,4 @@
-package com.benallouch.yunar.db
+package com.benallouch.yunar.db.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

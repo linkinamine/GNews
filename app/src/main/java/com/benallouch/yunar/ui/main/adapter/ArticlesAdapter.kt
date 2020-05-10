@@ -80,7 +80,7 @@ class ArticlesAdapter(private val currentOffset: Int) :
                 article_title.text = article.title
                 article_description.text = article.description
                 article_source.text = article.source.name
-                article_published.text = article.publishedAt.parseDate(currentOffset)
+                article_published.text = article.publishedAt?.parseDate(currentOffset)
                 if (article.urlToImage != null) {
                     Glide.with(context).load(article.urlToImage).centerCrop().into(article_iv)
                 } else {
@@ -90,6 +90,7 @@ class ArticlesAdapter(private val currentOffset: Int) :
         }
     }
 
+    //Append a progress bar to indicate loading
     fun addLoadingView() {
         articles.add(null)
         notifyItemInserted(articles.size - 1)

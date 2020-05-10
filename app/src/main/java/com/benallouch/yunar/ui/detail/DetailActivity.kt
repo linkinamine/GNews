@@ -13,6 +13,9 @@ import com.benallouch.yunar.R
 import com.benallouch.yunar.ui.EXTRA_ARTICLE_URL
 import kotlinx.android.synthetic.main.details_activity.*
 
+/**
+ * WebView to display the details of the article (same pattern used by Google News App)
+ */
 class DetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

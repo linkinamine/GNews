@@ -30,10 +30,10 @@ class GetArticlesUseCaseTest {
     fun `invoke calls articles repository`() {
         runBlocking {
 
-            val articles = arrayListOf(mockedArticle.copy(articleId = 1))
-            whenever(articlesRepository.getArticles(1)).thenReturn(NewsResponse(null, 100, articles))
+            val articles = arrayListOf(mockedArticle.copy(articleId = "id"))
+            whenever(articlesRepository.getArticles(1,false)).thenReturn(NewsResponse(null, 100, articles))
 
-            val result = getPopularArticles.invoke(1)
+            val result = getPopularArticles.invoke(1,false)
 
             Assert.assertEquals(articles, result.articles)
         }

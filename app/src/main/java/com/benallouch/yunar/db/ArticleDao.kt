@@ -1,6 +1,8 @@
 package com.benallouch.yunar.db
 
 import androidx.room.*
+import com.benallouch.yunar.db.entity.ArticleDbEntity
+import com.benallouch.yunar.db.entity.TotalResultsEntity
 
 @Dao
 interface ArticleDao {
